@@ -7,16 +7,16 @@ public class TicTacToe{
                 if(playerInput=='X'){
                         computerInput='O';
                 }
-                char[][] gameBoard=initializationGameBoard();
-                //displayBoard(gameBoard);
+                char[] gameBoard=initializationGameBoard();
+		displayBoard(gameBoard);
+		moveToDesiredLocation(scanner,gameBoard,playerInput,computerInput);
 
         }
-        public static char[][] initializationGameBoard(){
-                char[][] playBoard = {{' ','|',' ','|',' '},
-                                {'-','-','-','-','-'},
-                                {' ','|',' ','|',' '},
-                                {'-','-','-','-','-'},
-                                {' ','|',' ','|',' '}};
+        public static char[] initializationGameBoard(){
+                char[] playBoard=new char[10];
+		for(int i=1;i<=9;i++){
+			playBoard[i]=' ';
+		}
                 return playBoard;
         }
         public static char determineInput(Scanner scanner){
@@ -34,12 +34,33 @@ public class TicTacToe{
                 }
 
         }
-        public static void displayBoard(char[][] playBoard){
-                for(char[] row:playBoard){
-                       for(char element:row){
-                               System.out.print(element);
-                       }
-                       System.out.println();
+        public static void displayBoard(char[] playBoard){
+                for(int i=1;i<playBoard.length;i++){
+                	System.out.print(playBoard[i]);
+			System.out.print("|");
+
+			if(i==3||i==6||i==9){
+				System.out.println();
+			}
                 }
         }
+	public static void moveToDesiredLocation(Scanner scanner,char[] playBoard,char userInput,char computerInput){
+		System.out.println("Enter the position (1-9) : ");
+                while(true){
+			int userPosition = scanner.nextInt();
+			if(playBoard[userPosition]==' '){
+				 playBoard[userPosition]=userInput;
+			}
+			else{
+				System.out.println(userPosition+" is Position taken");
+			}
+			Random random=new Random();
+                	int computerPosition=random.nextInt(9);
+			if(playBoard[computerPosition]==' '){
+				playBoard[computerPosition]=computerInput;
+			}
+                	displayBoard(playBoard);
+
+		}
+	}
 }
